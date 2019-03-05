@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>The Psychic Game</title>
+    </head>
+
+    <body>
+        <header>
+            <h1>The Psychic Game</h1>
+        </header>
+        <div>
+
+            <!--The app randomly picks a letter. I'll never tell-->
+            <h2> Guess what letter I'm thinking of</h2>
+                        
+            <!--# of times the user has guessed the letter correctly
+            When the player wins, increase the Wins counter and start the game over again (without refreshing the page)-->
+            <h2 id = "wins-text">Wins:</h2>
+            
+            <!--# of times the user has failed to guess the letter correctly after exhausing all guesses. When the player loses, increase the Losses counter and restart the game without a page refresh(just like when the user wins-->
+            <h2 id = "losses-text">Losses:</h2>
+
+            <!--# of guesses left. This will update-->
+            <h2 id = "guessesLeft-text">Guesses Left:</h2>
+
+            <!--the specific letters that the user typed. Display these until the user either wins or loses-->
+            <h2 id = "yourGuessesSoFar-text">Your Guesses so far:</h2>
+
+        </div>
+
+        <script type="text/javascript">
+            // Creates an array that lists out all of the letters of alphabet.
+            var alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+        
+            var alphaTest = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+
+            // Create variables that hold references to the places in the HTML where we want to display things.
+            var wins = document.getElementById("wins-text");
+            var losses = document.getElementById("losses-text");
+            var guessesLeft = document.getElementById("guessesLeft-text");
+            var yourGuessesSoFar = document.getElementById("yourGuessesSoFar-text");
+            var winsUser =  0;
+            var lossesUser = 0;
+            var guessesLeftUser = 9;
+            var yourGuessesSoFarUser = "";
+            var computerGuess = alphabet[Math.floor(Math.random() * alphabet.length)];
+            
+            // This function is run whenever the user presses a key.
+            document.onkeyup = function(event) {
+        
+              // Determines which key was pressed.
+              var userGuess = event.key;
+              userGuess = userGuess.toUpperCase();
+
+              // Randomly chooses a choice from the options array. This is the Computer's guess.
+              //computerGuess = alphabet[Math.floor(Math.random() * alphabet.length)];
+        
+              // Only run the following code block if the user presses "a" thru "z".
+              
+              if ((userGuess === "A") || (userGuess === "B")){
+                --guessesLeftUser; 
+
+                if (userGuess === computerGuess) {
+                  ++winsUser;
+                  guessesLeftUser = 9;
+                  yourGuessesSoFarUser = "";
+                  computerGuess = alphabet[Math.floor(Math.random() * alphabet.length)];
+                }
+                else {
+                 yourGuessesSoFarUser += userGuess + ", ";
+                }
+
+                if (guessesLeftUser === 0) {
+                  ++lossesUser;
+                  guessesLeftUser = 9;
+                  yourGuessesSoFarUser = "";
+                  computerGuess = alphabet[Math.floor(Math.random() * alphabet.length)];
+                }
+
+                // Display the user and computer guesses.
+                wins.textContent = "Wins: " + winsUser;
+                losses.textContent = "Losses: " + lossesUser;
+                guessesLeft.textContent = "Guesses Left: " + guessesLeftUser;
+                yourGuessesSoFar.textContent = "Your Guesses so far: " + yourGuessesSoFarUser;
+
+                //console.log(computerGuess);
+                //26 alphabet check
+                //remove extra comments
+                //dont accept same choice. alert note
+                
+              }
+            
+            };
+          </script>
+
+    </body>
+</html>
